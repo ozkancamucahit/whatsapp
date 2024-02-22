@@ -1,10 +1,12 @@
-import { ActivityIndicator, KeyboardAvoidingView, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaskInput from 'react-native-mask-input';
+
+
 
 interface Props {
 
@@ -14,7 +16,7 @@ const otp = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const router = useRouter();
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0;
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 0;
   const {bottom} = useSafeAreaInsets();
 
   const openLink = () => {
@@ -25,7 +27,7 @@ const otp = (props: Props) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      // router.push('/otp')
+      router.push(`/verify/${phoneNumber}`)
     }, 1000);
   }
 
@@ -33,8 +35,11 @@ const otp = (props: Props) => {
     
   }
   
+
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={keyboardVerticalOffset}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
       <View style={styles.container}>
         {loading && (
           <View style={[StyleSheet.absoluteFill, styles.loading]}>
@@ -53,9 +58,10 @@ const otp = (props: Props) => {
           <MaskInput
             value={phoneNumber}
             style={styles.input}
-            keyboardType='numeric'
             placeholder='+90 your phone number'
             autoFocus
+            inputMode='numeric'
+
             onChangeText={(masked, unmasked) => {
               setPhoneNumber(masked); // you can use the unmasked value as well
             }}
@@ -105,6 +111,8 @@ const otp = (props: Props) => {
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </View>
+      </TouchableWithoutFeedback>
+
     </KeyboardAvoidingView>
   );
 }
@@ -162,7 +170,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   buttonText: {
-    color: Colors.gray,
+    color: Colors.background,
     fontSize: 18,
     fontWeight: '500'
   },

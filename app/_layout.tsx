@@ -42,9 +42,24 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
-      <Stack>
-        <Stack.Screen name="otp" options={{ headerTitle: 'Enter Your Phone Number', headerBackVisible: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
+    <Stack>
+      <Stack.Screen
+        name="otp"
+        options={{
+          headerTitle: "Enter Your Phone Number",
+          headerBackVisible: false,
+        }}
+      />
+      <Stack.Screen 
+        name="index" 
+        options={{ headerShown: false }} />
+      <Stack.Screen
+        name="verify/[phone]"
+        options={{
+          headerTitle: "Verify your phone number",
+          headerBackTitle: 'Edit number',
+        }}
+      />
+    </Stack>
   );
 }
