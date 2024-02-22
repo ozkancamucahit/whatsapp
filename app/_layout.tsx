@@ -43,7 +43,8 @@ function RootLayoutNav() {
 
   return (
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: true }} />
+        <Stack.Screen name="otp" options={{ headerTitle: 'Enter Your Phone Number', headerBackVisible: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
       </Stack>
   );
 }
