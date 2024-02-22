@@ -9,9 +9,9 @@ import Constants from "expo-constants"
 import * as SecureStore from "expo-secure-store";
 import { View } from 'react-native';
 
-const clerkPublishableKey :string = Constants.expoConfig?.extra?.clerkPublishableKey ?? ""
+ const clerkPublishableKey :string = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ?? ""
 
-console.log('clerkPublishableKey :>> ', clerkPublishableKey);
+// console.log('clerkPublishableKey :>> ', clerkPublishableKey);
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -66,8 +66,12 @@ const InitialLayout = () => {
 
     const inTabsGroup = segments[0] === '(tabs)';
 
+    console.log('isSignedIn changed', isSignedIn);
+
     if(isSignedIn && !inTabsGroup){
       router.replace("/(tabs)/chats");
+    } else if(!isSignedIn){
+      router.replace('/');
     }
   
   }, [isSignedIn])

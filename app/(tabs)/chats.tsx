@@ -7,7 +7,7 @@ type Props = {}
 const Page = (props: Props) => {
   return (
     <View>
-      <Text>Page</Text>
+      <Text>inside baby</Text>
     </View>
   )
 }

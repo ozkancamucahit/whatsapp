@@ -1,10 +1,11 @@
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { ActivityIndicator, Alert, Keyboard, KeyboardAvoidingView, Linking, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaskInput from 'react-native-mask-input';
+import { isClerkAPIResponseError, useSignIn, useSignUp } from '@clerk/clerk-expo';
 
 
 
@@ -18,6 +19,8 @@ const otp = (props: Props) => {
   const router = useRouter();
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 0;
   const {bottom} = useSafeAreaInsets();
+  const {signUp, setActive} = useSignUp();
+  const {signIn} = useSignIn();
 
   const openLink = () => {
     Linking.openURL('https://meta.com');
@@ -25,14 +28,47 @@ const otp = (props: Props) => {
 
   const sendOTP = async () => {
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await signUp?.create({
+        phoneNumber
+      });
+
+      signUp?.preparePhoneNumberVerification();
+      router.push(`/verify/${phoneNumber}`);
+    } catch (error) {
+      if(isClerkAPIResponseError(error)){
+        if(error.errors[0].code === 'form_identifier_exists'){
+          console.log('user exists');
+          await trySignIn();
+        }else{
+          Alert.alert('Error', error.errors[0].message)
+        }
+      }
+      
+    }
+    finally{
       setLoading(false);
-      router.push(`/verify/${phoneNumber}`)
-    }, 1000);
+    }
   }
 
   const trySignIn = async () => {
-    
+    const { supportedFirstFactors } = await signIn!.create({
+      identifier: phoneNumber,
+    });
+
+    const firstPhoneFactor :any = supportedFirstFactors.find((factor :any) => {
+      return factor.strategy === "phone_code";
+    });
+
+    const { phoneNumberId } = firstPhoneFactor;
+
+    await signIn!.prepareFirstFactor({
+      strategy: "phone_code",
+      phoneNumberId,
+    });
+
+    router.push(`/verify/${phoneNumber}?signin=true`);
+    setLoading(false);
   }
   
 
