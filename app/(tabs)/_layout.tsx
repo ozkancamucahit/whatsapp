@@ -28,6 +28,7 @@ const Layout = (props: Props) => {
         }}/>
         <Tabs.Screen name='calls' options={{
           title: 'Calls',
+          headerShown: false,
           tabBarIcon: ({size, color}) => <MaterialCommunityIcons name='phone-outline' size={size} color={color}/>
         }}/>
         <Tabs.Screen name='communities' options={{
