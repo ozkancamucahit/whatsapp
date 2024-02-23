@@ -4,14 +4,15 @@ import React from 'react'
 
 type Props = {}
 
-const Chats = (props: Props) => {
+const Update = (props: Props) => {
   return (
     <View>
-      <Text>inside baby</Text>
+      <Text>Update</Text>
     </View>
   )
 }
 
-export default Chats
+export default Update
 
 const styles = StyleSheet.create({})
+

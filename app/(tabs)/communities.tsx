@@ -1,17 +1,16 @@
-
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 type Props = {}
 
-const Chats = (props: Props) => {
+const Communities = (props: Props) => {
   return (
     <View>
-      <Text>inside baby</Text>
+      <Text>Communities</Text>
     </View>
   )
 }
 
-export default Chats
+export default Communities
 
 const styles = StyleSheet.create({})

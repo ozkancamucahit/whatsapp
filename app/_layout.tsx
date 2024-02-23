@@ -83,6 +83,10 @@ const InitialLayout = () => {
 
   return (
     <Stack>
+      <Stack.Screen name='(tabs)' options={{headerShown: false}} />
+      <Stack.Screen 
+        name="index" 
+        options={{ headerShown: false }} />
       <Stack.Screen
         name="otp"
         options={{
@@ -90,9 +94,6 @@ const InitialLayout = () => {
           headerBackVisible: false,
         }}
       />
-      <Stack.Screen 
-        name="index" 
-        options={{ headerShown: false }} />
       <Stack.Screen
         name="verify/[phone]"
         options={{
@@ -100,6 +101,9 @@ const InitialLayout = () => {
           headerBackTitle: 'Edit number',
         }}
       />
+
+
+
     </Stack>
   )
 }
