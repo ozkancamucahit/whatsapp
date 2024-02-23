@@ -13,7 +13,7 @@ const Layout = (props: Props) => {
       <Tabs screenOptions={{
         tabBarStyle: {
           backgroundColor: Colors.background
-      },
+        },
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveBackgroundColor: Colors.background,
         tabBarActiveBackgroundColor: Colors.background,
@@ -40,6 +40,7 @@ const Layout = (props: Props) => {
         }}/>
         <Tabs.Screen name='settings' options={{
           title: 'Settings',
+          headerShown: false,
           tabBarIcon: ({size, color}) => <Ionicons name='cog' size={size} color={color}/>
         }}/>
 
