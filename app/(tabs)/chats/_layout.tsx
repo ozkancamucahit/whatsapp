@@ -36,7 +36,7 @@ const _layout = (props: Props) => {
               <TouchableOpacity>
                 <Ionicons name="camera-outline" color={Colors.primary} size={30} />
               </TouchableOpacity>
-              <Link href="/" asChild>
+              <Link href="(modals)/NewChat" asChild>
                 <TouchableOpacity>
                   <Ionicons name="add-circle" color={Colors.primary} size={30} />
                 </TouchableOpacity>

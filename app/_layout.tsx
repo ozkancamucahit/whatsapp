@@ -1,13 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Link, Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import Constants from "expo-constants"
 import * as SecureStore from "expo-secure-store";
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import Colors from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
  const clerkPublishableKey :string = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ?? ""
 
@@ -83,10 +83,7 @@ const InitialLayout = () => {
 
   return (
     <Stack>
-      <Stack.Screen name='(tabs)' options={{headerShown: false}} />
-      <Stack.Screen 
-        name="index" 
-        options={{ headerShown: false }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
         name="otp"
         options={{
@@ -98,14 +95,35 @@ const InitialLayout = () => {
         name="verify/[phone]"
         options={{
           headerTitle: "Verify your phone number",
-          headerBackTitle: 'Edit number',
+          headerBackTitle: "Edit number",
         }}
       />
-
-
-
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(modals)/NewChat"
+        options={{
+          presentation: "modal",
+          title: "New Chat",
+          headerTransparent: true,
+          headerBlurEffect: "regular",
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+          headerSearchBarOptions: {
+            placeholder: "Search name or number",
+            hideWhenScrolling: false,
+          },
+          headerRight: () => (
+            <Link href="(tabs)/chats" asChild>
+              <TouchableOpacity>
+                <Ionicons name="close" color={Colors.gray} size={30} />
+              </TouchableOpacity>
+            </Link>
+          ),
+        }}
+      />
     </Stack>
-  )
+  );
 }
 
 const RootLayoutNav = () =>  {
